@@ -32,16 +32,23 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(productsICanEat.length).toBe(FILL_ME_IN);
+    expect(productsICanEat.length).toBe(1);
   });
 
   it("given I'm allergic to nuts and hate mushrooms, it should find a pizza I can eat (functional)", function () {
 
-      var productsICanEat = [];
+//      var productsICanEat = [];
 
       /* solve using filter() & all() / any() */
+      var productsICanEat = _.filter(products, function(pizza){
+        console.log(_.intersect(pizza.ingredients,["mushrooms"]).length );
+        return pizza.containsNuts === false && _.intersect(pizza.ingredients,["mushrooms"]).length === 0;
+      }
+    ) 
+//      debugger;
 
-      expect(productsICanEat.length).toBe(FILL_ME_IN);
+
+      expect(productsICanEat.length).toBe(1);
   });
 
   /*********************************************************************************/
@@ -55,19 +62,35 @@ describe("About Applying What We Have Learnt", function() {
       }
     }
 
-    expect(sum).toBe(FILL_ME_IN);
+    expect(sum).toBe(233168);
   });
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
+    var list3 = _.reduce(_.range(0,1000,3), function(a,b){ return a + b;});
 
-    var sum = FILL_ME_IN;    /* try chaining range() and reduce() */
+    var list5 = _.reduce(_.range(0,1000,5), function(a,b){ return a + b;});
+    var sum;
 
-    expect(233168).toBe(FILL_ME_IN);
+    var reduce = function (listA,listB) {
+      var listASum = _.reduce(listA, function(a,b){ return a + b;});
+      var listBSum = _.reduce(listB, function(a,b){ return a + b;});
+      var sum = listASum[0] + listBSum[0];
+    
+    }
+
+    return sum;    /* try chaining range() and reduce() */
+
+    expect(233168).toBe(sum);
   });
 
   /*********************************************************************************/
    it("should count the ingredient occurrence (imperative)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
+
+    //store ingredientCount in var
+    //iterate on each of the products
+      // for each of the products, iterate on their ingredients
+      // add 1 ingredientCount[product.ingredient] for every one it finds, allow 0 if it finds none 
 
     for (i = 0; i < products.length; i+=1) {
         for (j = 0; j < products[i].ingredients.length; j+=1) {
@@ -75,15 +98,17 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
-
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    var mapIngredientCount = function(x) { 
+    _.map(ingredientCount[x], function(num){ return num + 1; });
+    }
+    expect(ingredientCount['mushrooms']).toBe(mapIngredientCount('mushrooms'));
   });
 
   /*********************************************************************************/
